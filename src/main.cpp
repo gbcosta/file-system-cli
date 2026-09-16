@@ -1,5 +1,9 @@
-#include <iostream>
+#include "cli/CommandParser.h"
+#include "filesystem/Filesystem.h"
+
 int main(int argc, char *argv[]) {
-  std::cout << "test" << std::endl;
+  Filesystem fs;
+  CommandParser commandParser;
+  commandParser.execute(argc, argv);
   return 0;
 }
