@@ -18,6 +18,9 @@ void CommandParser::execute(int argc, char *argv[]) {
   case Command::Delete:
     fs.deleteFile(argv[2]);
     break;
+  case Command::Search:
+    fs.search(argv[2], argv[3]);
+    break;
   case Command::NotFound:
     return;
   }
@@ -27,6 +30,7 @@ Command CommandParser::toCommand(const std::string &s) {
   static const std::unordered_map<std::string, Command> commands = {
       {"list", Command::List},
       {"delete", Command::Delete},
+      {"search", Command::Search},
   };
   auto it = commands.find(s);
   return it != commands.end() ? it->second : Command::NotFound;

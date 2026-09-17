@@ -6,10 +6,9 @@ class Filesystem {
 public:
   Filesystem();
   void list(std::string path);
-  std::string search();
+  void search(std::string path, std::string strToSearch);
   void copy();
   void move();
-  void deletePath();
   void deleteFile(std::string path);
   void help();
 };
