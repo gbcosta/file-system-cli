@@ -11,3 +11,14 @@ void Filesystem::list(std::string path) {
     std::cout << input.path() << std::endl;
   }
 }
+
+void Filesystem::deleteFile(std::string path) {
+  if (fs::is_regular_file(path)) {
+    fs::remove(path);
+    return;
+  }
+
+  if (fs::is_directory(path)) {
+    fs::remove_all(path);
+  }
+}

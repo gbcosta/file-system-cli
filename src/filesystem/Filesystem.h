@@ -9,6 +9,7 @@ public:
   std::string search();
   void copy();
   void move();
-  std::string deletePath();
-  std::string help();
+  void deletePath();
+  void deleteFile(std::string path);
+  void help();
 };
