@@ -1,18 +1,20 @@
 #include "Filesystem.h"
 #include <filesystem>
 #include <iostream>
+#include <string>
 
 namespace fs = std::filesystem;
+using namespace std;
 
 Filesystem::Filesystem() {}
 
-void Filesystem::list(std::string path) {
+void Filesystem::list(fs::path path) {
   for (const auto &input : fs::directory_iterator(path)) {
-    std::cout << input.path() << std::endl;
+    cout << input.path() << std::endl;
   }
 }
 
-void Filesystem::deleteFile(std::string path) {
+void Filesystem::deleteFile(fs::path path) {
   if (fs::is_regular_file(path)) {
     fs::remove(path);
     return;
@@ -23,20 +25,38 @@ void Filesystem::deleteFile(std::string path) {
   }
 }
 
-void Filesystem::search(std::string path, std::string strToSearch) {
-  if (!fs::is_directory(path) || strToSearch.size() == 0)
+void Filesystem::search(fs::path path, fs::path searchStr) {
+  if (!fs::is_directory(path) || searchStr.string().size() == 0) {
+    return;
+  }
+
+  fs::path inputFileName;
+  for (const auto &input : fs::recursive_directory_iterator(path)) {
+    fs::path inputFileName = input.path().string();
+
+    if (inputFileName.filename().string().find(searchStr) !=
+        std::string::npos) {
+      cout << input.path() << "\n";
+    }
+  }
+}
+
+void Filesystem::copy(fs::path path, fs::path pastePath) {
+  cout << path << "\n";
+  cout << pastePath << "\n";
+
+  if (!fs::is_directory(pastePath) || !fs::is_directory(path) ||
+      !fs::is_regular_file(path))
     return;
 
-  for (const auto &input : fs::recursive_directory_iterator(path)) {
-    std::string inputString = input.path().string();
-    const size_t lastSlashPos = inputString.find_last_of("/");
-    std::string lastPart = (lastSlashPos != std::string::npos)
-                               ? inputString.substr(lastSlashPos + 1)
-                               : "";
+  if (fs::is_directory(path)) {
+    fs::copy(path, pastePath, fs::copy_options::recursive);
+    cout << "copy directory" << "\n";
+    return;
+  }
 
-    if (lastPart.find(strToSearch) != std::string::npos &&
-        fs::is_regular_file(input)) {
-      std::cout << input.path() << "\n";
-    }
+  if (fs::is_regular_file(path)) {
+    fs::copy(path, pastePath);
+    return;
   }
 }

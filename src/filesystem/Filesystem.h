@@ -1,14 +1,16 @@
 #pragma once
 
-#include <string>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 class Filesystem {
 public:
   Filesystem();
-  void list(std::string path);
-  void search(std::string path, std::string strToSearch);
-  void copy();
+  void list(fs::path path);
+  void search(fs::path path, fs::path searchStr);
+  void copy(fs::path path, fs::path pastePath);
   void move();
-  void deleteFile(std::string path);
+  void deleteFile(fs::path path);
   void help();
 };
