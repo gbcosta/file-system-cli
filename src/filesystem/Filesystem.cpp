@@ -45,13 +45,14 @@ void Filesystem::copy(fs::path path, fs::path pastePath) {
   cout << path << "\n";
   cout << pastePath << "\n";
 
-  if (!fs::is_directory(pastePath) || !fs::is_directory(path) ||
-      !fs::is_regular_file(path))
+  if (!fs::is_directory(path) && !fs::is_regular_file(path))
     return;
 
   if (fs::is_directory(path)) {
-    fs::copy(path, pastePath, fs::copy_options::recursive);
-    cout << "copy directory" << "\n";
+    fs::path finalPath = pastePath / path.filename();
+
+    fs::copy(path, finalPath,
+             fs::copy_options::recursive | fs::copy_options::skip_existing);
     return;
   }
 
