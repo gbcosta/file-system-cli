@@ -88,3 +88,15 @@ void Filesystem::copy(fs::path path, fs::path pastePath) {
     cerr << "Error: " << ec.message() << "\n";
   }
 }
+
+void Filesystem::move(fs::path path, fs::path movePath) {
+  std::error_code ec;
+  if (!fs::is_directory(path, ec) && !fs::is_regular_file(path, ec))
+    return;
+
+  fs::rename(path, movePath, ec);
+
+  if (ec) {
+    cerr << "Error: " << ec.message() << "\n";
+  }
+}

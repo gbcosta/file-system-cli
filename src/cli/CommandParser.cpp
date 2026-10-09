@@ -30,6 +30,10 @@ void CommandParser::execute(int argc, char *argv[]) {
     if (argc > 3)
       fs.copy(argv[2], argv[3]);
     break;
+  case Command::Move:
+    if (argc > 3)
+      fs.move(argv[2], argv[3]);
+    break;
   case Command::NotFound:
     return;
   }
@@ -37,10 +41,9 @@ void CommandParser::execute(int argc, char *argv[]) {
 
 Command CommandParser::toCommand(const std::string &s) {
   static const std::unordered_map<std::string, Command> commands = {
-      {"list", Command::List},
-      {"delete", Command::Delete},
-      {"search", Command::Search},
-      {"copy", Command::Copy},
+      {"list", Command::List},     {"delete", Command::Delete},
+      {"search", Command::Search}, {"copy", Command::Copy},
+      {"move", Command::Move},
   };
   auto it = commands.find(s);
   return it != commands.end() ? it->second : Command::NotFound;

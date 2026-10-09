@@ -10,7 +10,7 @@ public:
   void list(fs::path path);
   void search(fs::path path, fs::path searchStr);
   void copy(fs::path path, fs::path pastePath);
-  void move();
+  void move(fs::path path, fs::path movePath);
   void deleteFile(fs::path path);
   void help();
 };
