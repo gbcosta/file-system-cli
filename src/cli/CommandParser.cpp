@@ -1,5 +1,6 @@
 #include "CommandParser.h"
 #include "filesystem/Filesystem.h"
+#include <iostream>
 #include <unordered_map>
 
 CommandParser::CommandParser() {}
@@ -7,22 +8,27 @@ CommandParser::CommandParser() {}
 void CommandParser::execute(int argc, char *argv[]) {
   if (argc == 1)
     return;
+  std::cout << "argc: " << argc << "\n";
 
   Filesystem fs;
   Command command = toCommand(argv[1]);
 
   switch (command) {
   case Command::List:
-    fs.list(argv[2]);
+    if (argc > 2)
+      fs.list(argv[2]);
     break;
   case Command::Delete:
-    fs.deleteFile(argv[2]);
+    if (argc > 2)
+      fs.deleteFile(argv[2]);
     break;
   case Command::Search:
-    fs.search(argv[2], argv[3]);
+    if (argc > 3)
+      fs.search(argv[2], argv[3]);
     break;
   case Command::Copy:
-    fs.copy(argv[2], argv[3]);
+    if (argc > 3)
+      fs.copy(argv[2], argv[3]);
     break;
   case Command::NotFound:
     return;
