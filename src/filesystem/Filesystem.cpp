@@ -100,3 +100,35 @@ void Filesystem::move(fs::path path, fs::path movePath) {
     cerr << "Error: " << ec.message() << "\n";
   }
 }
+
+void Filesystem::help() {
+  cout << "=== Available Filesystem Commands ===\n\n";
+
+  cout << "list <path>\n"
+       << "    Lists all files and folders inside the given directory.\n"
+       << "    Example: list /home/user/documents\n\n";
+
+  cout << "deleteFile <path>\n"
+       << "    Removes a file or a directory (including all of its contents).\n"
+       << "    Warning: directory deletion is recursive and irreversible.\n"
+       << "    Example: deleteFile /home/user/temp\n\n";
+
+  cout << "search <path> <text>\n"
+       << "    Recursively searches, starting from the given directory, for\n"
+       << "    files and folders whose name contains the search text.\n"
+       << "    Example: search /home/user report\n\n";
+
+  cout << "copy <source> <destination>\n"
+       << "    Copies a file or directory to the given destination.\n"
+       << "    Directories are copied recursively; files that already exist\n"
+       << "    at the destination are skipped.\n"
+       << "    Example: copy /home/user/photo.png /home/user/backup\n\n";
+
+  cout << "move <source> <destination>\n"
+       << "    Moves a file or directory to the given destination\n"
+       << "    (copies to the destination and removes the original).\n"
+       << "    Example: move /home/user/photo.png /home/user/photos\n\n";
+
+  cout << "help\n"
+       << "    Displays this list of commands.\n";
+}

@@ -2,7 +2,7 @@
 
 #include <string>
 
-enum class Command { List, Delete, Search, Copy, Move, NotFound };
+enum class Command { List, Delete, Search, Copy, Move, Help, NotFound };
 
 class CommandParser {
 public:
